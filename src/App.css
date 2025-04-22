@@ -1,51 +1,12 @@
-/* .App { */
-  /* text-align: center;
-} */
-
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-} */
-
-/* @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-} */
-
-/* .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-} */
-
-/* .App-link {
-  color: #61dafb;
-} */
-
-/* @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
-/* .input-box {
+.input-box {
   flex: 1;
   padding: 10px;
   border: 0;
   border-radius: 10px;
   background: #f1f1f1;
-} */
+}
 
-/* .send-button {
+.send-button {
   margin-left: 10px;
   padding: 10px;
   background: #007bff;
@@ -54,14 +15,14 @@
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.3s ease;
-} */
+}
 
-/* .send-button:hover {
+.send-button:hover {
   background: #0056b3;
-} */
+}
 
-/* .open-sidebar-button {
-  background: #f1f1f1;
+.open-sidebar-button {
+  background: #f1f1f1; /* Slightly darker gray */
   border: none;
   border-radius: 10px;
   font-size: 20px;
@@ -70,22 +31,21 @@
   text-align: center;
   display: block;
   width: 100%;
-  transition: background 0.3s ease;
-} 
-*/
+  transition: background 0.3s ease; /* Smooth transition for hover effect */
+}
 
-/* .open-sidebar-button:hover {
-  background: #c0c0c0; 
-} */
-/*
+.open-sidebar-button:hover {
+  background: #c0c0c0; /* Darker gray on hover */
+}
+
 .sidebar-options {
   display: block;
   padding: 10px;
   border-radius: 10px;
   width: 100%;
-  margin-bottom: 10px; 
-  background: #e0e0e0; 
+  margin-bottom: 10px; /* Adds spacing between the buttons */
+  background: #e0e0e0; /* Slightly darker gray */
   border: none;
   cursor: pointer;
   transition: background 0.3s ease;
-} */
+}

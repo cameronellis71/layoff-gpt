@@ -142,41 +142,276 @@ function App() {
   };
 
   return (
-    <>
-      {/* Nav Bar */}
-      <nav class="navbar navbar-expand-sm bg-light">
-        <div class="container-fluid">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <button class="btn btn-primary btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
-                ☰
-              </button>
-            </li>
-          </ul>
-        </div>
-      </nav>
+    <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+      {/* Sidebar */}
+      <div
+        style={{
+          position: isSidebarOpen ? "fixed" : "relative",
+          width: isSidebarOpen ? "250px" : "60px",
+          background: "#f1f1f1",
+          height: "100%",
+          overflow: "hidden",
+          zIndex: 1000,
+          transition: "width 0.3s ease",
+        }}
+      >
+        <button
+          onClick={() => setSidebarOpen(!isSidebarOpen)}
+          className="open-sidebar-button"
+          onMouseEnter={(e) => (e.target.style.background = "#c0c0c0")} // Darker gray on hover
+          onMouseLeave={(e) => (e.target.style.background = "#f1f1f1")} // Reset to original color
+        >
+          ☰
+        </button>
+        {isSidebarOpen && (
+          <div style={{ padding: "10px" }}>
+            <SidebarButton
+              label="Chat" 
+              setCurrentView={setCurrentView} 
+              activeButton={activeButton} 
+              setActiveButton={setActiveButton} 
+            />
+            <SidebarButton
+              label="About"
+              setCurrentView={setCurrentView}
+              activeButton={activeButton}
+              setActiveButton={setActiveButton}
+            />
+          </div>
+        )}
+      </div>
 
-      {/* Offcanvas */}
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarLabel">
-        <div class="offcanvas-header">
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+        {/* Horizontal Navigation Bar */}
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: isSidebarOpen ? "250px" : "60px",
+            right: 0,
+            background: "#fff",
+            padding: "10px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            zIndex: 1000,
+            transition: "left 0.3s ease",
+          }}
+        >
+          <p
+            style={{
+              margin: 0,
+              fontSize: "18px",
+              fontWeight: "bold",
+              color: "#000",
+            }}
+          >
+            LayoffGPT
+          </p>
         </div>
-        <div class="offcanvas-body">
-          <ul class="list-unstyled">
-            <li><a href="#" class="nav-link">Chat</a></li>
-            <li><a href="#" class="nav-link">About</a></li>
-          </ul>
-        </div>
-      </div> 
 
-      {/* Footer */}
-      <footer class="bg-white text-black  text-center fixed-bottom">
-        <p style={{ fontSize: "11px", textAlign: "center" }}>
-          LayoffGPT can make mistakes. Check important info.
-        </p>
-      </footer>
-    </>
-  )
+        {currentView === "chat" && (
+          <>
+            {/* Chat history */}
+            <div
+              style={{
+                flex: "1",
+                padding: "20px",
+                paddingTop: "70px", // Account for the fixed navbar height
+                marginLeft: isSidebarOpen ? "250px" : "10px",
+                overflowY: "auto", // Enable scrolling for chat history
+                fontFamily: "Arial",
+                transition: "margin-left 0.3s ease",
+              }}
+            >
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  style={{
+                    display: "flex",
+                    justifyContent: msg.sender === "bot" ? "flex-start" : "flex-end",
+                    marginBottom: "10px", // Adds spacing between messages
+                  }}
+                >
+                  <div
+                    style={{
+                      background: msg.sender === "bot" ? "#f1f1f1" : "#007bff",
+                      color: msg.sender === "bot" ? "#000" : "#fff",
+                      padding: "10px",
+                      borderRadius: "10px",
+                      maxWidth: "70%",
+                      wordWrap: "break-word",
+                    }}
+                  >
+                    {msg.text.split("\n").map((line, i) => (
+                      <span key={i}>
+                        {line}
+                        {i < msg.text.split("\n").length - 1 && <br />}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <div ref={chatEndRef}></div>
+            </div>
+
+            {/* Footer */}
+            <div
+              style={{
+                background: "#fff",
+                padding: "10px",
+                display: "flex",
+                flexDirection: "column",
+                marginLeft: isSidebarOpen ? "250px" : "10px",
+                transition: "margin-left 0.3s ease",
+              }}
+            >
+              <div style={{ marginBottom: "10px" }}>
+                {currentQuestionIndex < templates[templateToUse].questions.length &&
+                  templates[templateToUse].questions[currentQuestionIndex]?.suggestions?.map((suggestion, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleSuggestionClick(suggestion)}
+                      style={{
+                        margin: "5px",
+                        padding: "10px",
+                        background: "#007bff",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "10px",
+                        cursor: "pointer",
+                        transition: "background 0.3s ease",
+                      }}
+                      onMouseEnter={(e) => (e.target.style.background = "#0056b3")}
+                      onMouseLeave={(e) => (e.target.style.background = "#007bff")}
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+
+                {/* Display suggestions when email is generated */}
+                {currentQuestionIndex >= templates[templateToUse].questions.length && (
+                  <>
+                    <button
+                      onClick={() => {
+                        handleNewEmailButtonClick()
+                      }}
+                      style={{
+                        margin: "5px",
+                        padding: "10px",
+                        background: "#007bff",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "10px",
+                        cursor: "pointer",
+                        transition: "background 0.3s ease",
+                      }}
+                      onMouseEnter={(e) => (e.target.style.background = "#0056b3")}
+                      onMouseLeave={(e) => (e.target.style.background = "#007bff")}
+                    >
+                      New Email
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleAboutButtonClick()
+                      }}
+                      style={{
+                        margin: "5px",
+                        padding: "10px",
+                        background: "#007bff",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "10px",
+                        cursor: "pointer",
+                        transition: "background 0.3s ease",
+                      }}
+                      onMouseEnter={(e) => (e.target.style.background = "#0056b3")}
+                      onMouseLeave={(e) => (e.target.style.background = "#007bff")}
+                    >
+                      About
+                    </button>
+                    <button
+                      onClick={() => window.open("https://www.buymeacoffee.com/layoffgpt", "_blank")}
+                      className="send-button"
+                      onMouseEnter={(e) => (e.target.style.background = "#0056b3")}
+                      onMouseLeave={(e) => (e.target.style.background = "#007bff")}
+                      style={{
+                        margin: "5px",
+                        padding: "10px",
+                      }}
+                    >
+                      Donate
+                    </button>
+                  </>
+                )}
+              </div>
+              <div style={{ display: "flex", marginBottom: "5px" }}>
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Message LayoffGPT"
+                  className="input-box"
+                />
+                <button
+                  onClick={() => {
+                    handleSend(input);
+                    setInput("");
+                  }}
+                  className="send-button"
+                  onMouseEnter={(e) =>
+                    (e.target.style.background = "#0056b3")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.target.style.background = "#007bff")
+                  }
+                >
+                  Send
+                </button>
+              </div>
+              <p style={{ fontSize: "12px", color: "#888", textAlign: "center" }}>
+                LayoffGPT can make mistakes. Check important info.
+              </p>
+            </div>
+          </>
+        )}
+
+        {currentView === "about" && (
+          <div
+            style={{
+              flex: 1,
+              padding: "20px",
+              paddingTop: "50px", // Account for the fixed navbar height
+              marginLeft: isSidebarOpen ? "250px" : "10px",
+              fontFamily: "Arial",
+              transition: "margin-left 0.3s ease",
+            }}
+          >
+            <h2>About</h2>
+            <p>
+              LayoffGPT is a generative AI chatbot that creates human-like & engaging layoff emails with the help of user-supplied suggestions.<br></br>
+            </p>
+            <h3>Donate</h3>
+            <p>
+              The creator of LayoffGPT is currently unemployed because of a layoff. If you'd like to support him while he looks for a new job, please
+              consider donating at Buy Me A Coffee
+            </p>
+            <a href="https://www.buymeacoffee.com/layoffgpt" target="_blank">
+              <img
+                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                alt="Buy Me a Coffee"
+                style={{
+                  height: "50px",
+                  width: "auto",
+                }}
+              />
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default App
