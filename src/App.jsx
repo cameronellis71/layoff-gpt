@@ -142,27 +142,33 @@ function App() {
   };
 
   return (
-<nav class="navbar navbar-expand-sm bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">LayoffGPT</a>
-    
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link 1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link 2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link 3</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+    <>
+      <nav class="navbar navbar-expand-sm bg-light">
 
+      <div class="container-fluid">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <button class="btn btn-primary btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+              ☰
+            </button>
+          </li>
+        </ul>
+      </div>
 
+      </nav>
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarLabel">
+        <div class="offcanvas-header">
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="list-unstyled">
+            <li><a href="#" class="nav-link">Chat</a></li>
+            <li><a href="#" class="nav-link">About</a></li>
+          </ul>
+        </div>
+      </div> 
+  
+    </>
   )
 }
 
