@@ -4,6 +4,8 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { templates } from './templates.js'
 import SidebarButton from "./components/SidebarButton.jsx";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Navbar, Nav } from 'react-bootstrap';
 
 const numTemplates = templates.length
 let templateToUse = Math.floor(Math.random() * numTemplates)
@@ -16,7 +18,7 @@ function App() {
   // Track which sidebar button is active
   const [activeButton, setActiveButton] = useState("");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [currentView, setCurrentView] = useState("about");
+  const [currentView, setCurrentView] = useState("chat");
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Tracks current question
   const [responseMap, setResponseMap] = useState(new Map());
@@ -140,69 +142,27 @@ function App() {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      {/* Horizontal Navigation Bar */}
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: isSidebarOpen ? "250px" : "60px",
-          right: 0,
-          background: "#fff",
-          padding: "10px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          zIndex: 1000,
-          transition: "left 0.3s ease",
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: "18px",
-            fontWeight: "bold",
-            color: "#000",
-          }}
-        >
-          LayoffGPT
-        </p>
-      </div>
-
-      {/* Main Content */}
-      {currentView === "about" && (
-        <div
-          style={{
-            flex: 1,
-            padding: "20px",
-            paddingTop: "60px", // Slightly more than navbar height
-            marginLeft: isSidebarOpen ? "250px" : "10px",
-            fontFamily: "Arial",
-            transition: "margin-left 0.3s ease",
-          }}
-        >
-          <h2>About</h2>
-          <p>
-            LayoffGPT is a generative AI chatbot that creates human-like & engaging layoff emails with the help of user-supplied suggestions.<br />
-          </p>
-          <h3>Donate</h3>
-          <p>
-            The creator of LayoffGPT is currently unemployed because of a layoff. If you'd like to support him while he looks for a new job, please
-            consider donating at Buy Me A Coffee
-          </p>
-          <a href="https://www.buymeacoffee.com/layoffgpt" target="_blank">
-            <img
-              src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-              alt="Buy Me a Coffee"
-              style={{
-                height: "50px",
-                width: "auto",
-              }}
-            />
-          </a>
-        </div>
-      )}
+<nav class="navbar navbar-expand-sm bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">LayoffGPT</a>
+    
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link 1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link 2</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link 3</a>
+        </li>
+      </ul>
     </div>
+  </div>
+</nav>
+
+
   )
 }
 
