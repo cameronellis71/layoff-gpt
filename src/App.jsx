@@ -16,7 +16,7 @@ function App() {
   // Track which sidebar button is active
   const [activeButton, setActiveButton] = useState("");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [currentView, setCurrentView] = useState("chat");
+  const [currentView, setCurrentView] = useState("about");
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Tracks current question
   const [responseMap, setResponseMap] = useState(new Map());
@@ -140,7 +140,7 @@ function App() {
   };
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       {/* Horizontal Navigation Bar */}
       <div
         style={{
@@ -169,7 +169,40 @@ function App() {
         </p>
       </div>
 
-    </>
+      {/* Main Content */}
+      {currentView === "about" && (
+        <div
+          style={{
+            flex: 1,
+            padding: "20px",
+            paddingTop: "60px", // Slightly more than navbar height
+            marginLeft: isSidebarOpen ? "250px" : "10px",
+            fontFamily: "Arial",
+            transition: "margin-left 0.3s ease",
+          }}
+        >
+          <h2>About</h2>
+          <p>
+            LayoffGPT is a generative AI chatbot that creates human-like & engaging layoff emails with the help of user-supplied suggestions.<br />
+          </p>
+          <h3>Donate</h3>
+          <p>
+            The creator of LayoffGPT is currently unemployed because of a layoff. If you'd like to support him while he looks for a new job, please
+            consider donating at Buy Me A Coffee
+          </p>
+          <a href="https://www.buymeacoffee.com/layoffgpt" target="_blank">
+            <img
+              src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+              alt="Buy Me a Coffee"
+              style={{
+                height: "50px",
+                width: "auto",
+              }}
+            />
+          </a>
+        </div>
+      )}
+    </div>
   )
 }
 
