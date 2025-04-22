@@ -143,19 +143,20 @@ function App() {
 
   return (
     <>
+      {/* Nav Bar */}
       <nav class="navbar navbar-expand-sm bg-light">
-
-      <div class="container-fluid">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <button class="btn btn-primary btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
-              ☰
-            </button>
-          </li>
-        </ul>
-      </div>
-
+        <div class="container-fluid">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <button class="btn btn-primary btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+                ☰
+              </button>
+            </li>
+          </ul>
+        </div>
       </nav>
+
+      {/* Offcanvas */}
       <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarLabel">
         <div class="offcanvas-header">
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -167,7 +168,13 @@ function App() {
           </ul>
         </div>
       </div> 
-  
+
+      {/* Footer */}
+      <footer class="bg-white text-black  text-center fixed-bottom">
+        <p style={{ fontSize: "11px", textAlign: "center" }}>
+          LayoffGPT can make mistakes. Check important info.
+        </p>
+      </footer>
     </>
   )
 }
