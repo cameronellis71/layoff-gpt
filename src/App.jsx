@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { templates } from './templates.js'
+import SidebarButton from "./components/SidebarButton.jsx";
 
 const numTemplates = templates.length
 let templateToUse = Math.floor(Math.random() * numTemplates)
